@@ -24,7 +24,7 @@ h5,
 h6 {
   font-size: 100%;
   font-weight: normal;
-  font-family: "Microsoft YaHei";
+  font-family: 'Microsoft YaHei';
 }
 img {
   border: none;
@@ -37,7 +37,7 @@ select {
   border: none;
 }
 body {
-  background: #fff;
+  // background: #fff;
   color: #5e5e5e;
   font: 14px/24px Microsoft YaHei, SimSun, Arial;
 }
@@ -74,7 +74,7 @@ a:active {
   zoom: 1;
 }
 .clear:after {
-  content: "";
+  content: '';
   display: block;
   height: 0;
   visibility: visible;

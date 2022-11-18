@@ -8,8 +8,14 @@
         <el-header>
           <HeaderComponent @foldChange="handleFoldChange" />
         </el-header>
-        <el-main>
-          <router-view></router-view>
+        <el-main class="content">
+          <router-view v-slot="{ Component, route }">
+            <transition name="el-fade-in-linear" mode="out-in">
+              <!-- <keep-alive> -->
+              <component v-if="isRefresh" :is="Component" :key="route.path" />
+              <!-- </keep-alive> -->
+            </transition>
+          </router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -17,13 +23,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import HeaderComponent from "./components/header.vue";
-import MenuComponent from "./components/menu.vue";
-const isFold = ref(false);
+import { ref } from 'vue'
+import HeaderComponent from './components/header.vue'
+import MenuComponent from './components/menu.vue'
+import { useRouterStore } from '@/store/modules/system-store'
+import { computed } from '@vue/reactivity'
+
+const systemStore = useRouterStore()
+const isRefresh = computed(() => systemStore.refresh)
+const isFold = ref(false)
 const handleFoldChange = (value: boolean) => {
-  isFold.value = value;
-};
+  isFold.value = value
+}
 </script>
 
 <style lang="scss" scoped>
@@ -32,16 +43,23 @@ const handleFoldChange = (value: boolean) => {
     height: 100vh;
     background-color: #fff;
     transition: width 0.3s linear;
+    box-shadow: $box-shadow;
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
+
   .el-header {
+    background-color: #fff;
+    box-shadow: $box-shadow;
+    padding: 20px;
+    width: 100%;
     height: 120px;
-    padding-top: 20px;
+    padding-top: 0 20px;
   }
   .el-main {
-    background-color: #f5f7f8;
+    background-color: #f0f2f5;
   }
 }
 </style>

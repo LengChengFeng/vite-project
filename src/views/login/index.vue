@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import LoginAccount from "./components/loginAccount.vue";
+import LoginAccount from './components/loginAccount.vue'
 </script>
 
 <style scoped lang="scss">

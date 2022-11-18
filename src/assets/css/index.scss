@@ -12,3 +12,30 @@
   background-color: #fff;
   border-radius: 5px;
 }
+
+.dotted {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: black;
+}
+.el-menu-item.is-active {
+  color: #fff !important;
+  background-color: #409eff !important;
+  .dotted {
+    width: 10px;
+    height: 10px;
+    transition: all 0.3s;
+    background-color: skyblue;
+  }
+}
+.el-menu-item:hover {
+  color: #fff;
+  .dotted {
+    width: 10px;
+    height: 10px;
+    transition: all 0.3s;
+    background-color: skyblue;
+  }
+}

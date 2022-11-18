@@ -10,10 +10,7 @@
       <el-dropdown>
         <span class="el-dropdown-link flex">
           <div class="avatar fc">
-            <img
-              src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
-              alt=""
-            />
+            <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" alt="" />
             <span>用户名</span>
           </div>
         </span>
@@ -29,31 +26,36 @@
 </template>
 
 <script setup lang="ts">
-import { ElMessage } from "element-plus";
-import screenfull from "screenfull";
-import { useRouter } from "vue-router";
-import { removeLocalData } from "@/utils/local";
-
-const router = useRouter();
+import { ElMessage } from 'element-plus'
+import screenfull from 'screenfull'
+import { useRouter } from 'vue-router'
+import { removeLocalData } from '@/utils/local'
+import { useRouterStore } from '@/store/modules/system-store'
+import { nextTick } from 'vue'
+const systemStore = useRouterStore()
+const router = useRouter()
 //全屏
 const handleFullScreen = () => {
   if (screenfull.isEnabled) {
-    screenfull.request();
+    screenfull.request()
   } else {
-    ElMessage.error("您的设置暂不支持全屏~");
+    ElMessage.error('您的设置暂不支持全屏~')
   }
-};
+}
 
 //刷新
 const handleRefresh = () => {
-  location.reload();
-};
+  systemStore.setRefresh(false)
+  nextTick(() => {
+    systemStore.setRefresh(true)
+  })
+}
 
 //退出登录
 const loginOut = () => {
-  removeLocalData("token");
-  router.push("/login");
-};
+  removeLocalData('token')
+  router.push('/login')
+}
 </script>
 
 <style scoped lang="scss">

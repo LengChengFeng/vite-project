@@ -8,12 +8,14 @@ interface routerType {
     routerList: any[],
     TabsList: ITabsType[],
     currentPath: ITabsType,
+    refresh: boolean,
 }
 export const useRouterStore = defineStore("router", {
     state: (): routerType => ({
         routerList: [],
         TabsList: [{ name: "核心技术", path: "/main/analysis/overview" }],
-        currentPath: { name: "核心技术", path: "/main/analysis/overview" }
+        currentPath: { name: "核心技术", path: "/main/analysis/overview" },
+        refresh: true,
     }),
     actions: {
         changeRouterList(list: any) {
@@ -26,6 +28,9 @@ export const useRouterStore = defineStore("router", {
             if (!result) {
                 this.TabsList.push(routerList)
             }
+        },
+        setRefresh(value: boolean) {
+            this.refresh = value
         }
     }
 })
