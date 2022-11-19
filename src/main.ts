@@ -3,6 +3,7 @@ import App from './App.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import "normalize.css"
+import vue3SeamlessScroll from "vue3-seamless-scroll";
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { registerIcon } from "./plugin/registerIcon"
 import { globalConfig } from "./utils/appConfig"
@@ -20,6 +21,7 @@ const app = createApp(App)
 registerIcon(app)
 globalConfig(app)
 app.use(ElementPlus, { locale: zhCn })
+app.use(vue3SeamlessScroll)
 app.use(router)
 app.use(pinia)
 app.use(BaiduMap, {
