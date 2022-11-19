@@ -1,20 +1,34 @@
 <template>
   <div class="tabs">
-    <el-tabs type="card" class="demo-tabs" v-model="activeName" @tab-change="handleTabChange" @tab-remove="handleRemoveTab">
-      <el-tab-pane
-        :closable="TabsList.length > 1"
-        v-for="item in systemStore.TabsList"
-        :key="item.name"
-        :label="item.name"
-        :name="item.path"
-      >
-      </el-tab-pane>
-    </el-tabs>
+    <div class="tab-list">
+      <el-tabs type="card" class="demo-tabs" v-model="activeName" @tab-change="handleTabChange" @tab-remove="handleRemoveTab">
+        <el-tab-pane
+          :closable="TabsList.length > 1"
+          v-for="item in systemStore.TabsList"
+          :key="item.name"
+          :label="item.name"
+          :name="item.path"
+        >
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
+    <div class="more">
+      <el-dropdown size="small">
+        <el-button size="small" type="primary"> 操作 </el-button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="handleAll">关闭所有</el-dropdown-item>
+            <el-dropdown-item @click="handleCloseOther">关闭其他</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useRouterStore } from '@/store/modules/system-store'
 
@@ -28,6 +42,7 @@ withDefaults(
 )
 const systemStore = useRouterStore()
 const router = useRouter()
+const route = useRoute()
 const { TabsList } = storeToRefs(systemStore)
 //tabs改变
 const handleTabChange = (path: string) => {
@@ -49,6 +64,21 @@ const handleRemoveTab = (path: string) => {
   }
   router.push(jumpRouter.path)
 }
+
+const handleAll = () => {
+  systemStore.TabsList = [{ name: '核心技术', path: '/main/analysis/overview' }]
+  router.push('/main/analysis/overview')
+}
+
+const handleCloseOther = () => {
+  const result = TabsList.value.find((item: ITabsType) => item.path === route.path)
+  systemStore.TabsList = [
+    { name: '核心技术', path: '/main/analysis/overview' },
+    { name: result?.name!, path: result?.path! }
+  ]
+  console.log(route.path)
+  console.log(result)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -67,6 +97,17 @@ const handleRemoveTab = (path: string) => {
     .el-tabs__item.is-active {
       background: $bg-color-isActive;
     }
+  }
+}
+.tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .tab-list {
+    flex: 1;
+  }
+  .more {
+    width: 50px;
   }
 }
 </style>
