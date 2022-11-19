@@ -9,6 +9,7 @@
       @handle-add="handleAdd"
       v-model:page="pageData.pageInfo"
       :getData="getData"
+      :search-params="pageData.searchParams"
     >
       <template #createDate="scoped"> {{ utcFormat(scoped.row.createAt) }}</template>
       <template #updateDate="scoped"> {{ utcFormat(scoped.row.createAt) }}</template>
@@ -32,10 +33,12 @@ import { reactive, ref } from 'vue'
 
 import MyForm from '@/components/AppForm/index.vue'
 import MyTable from '@/components/myTable/index.vue'
+import { useSearch } from '@/hooks/useSearch'
 import { formItemConfig, tableConfig, dialogFormItemConfig } from './config'
 import { utcFormat } from '@/utils/format'
 import Api from '@/services/main/index'
 const { getRoleList } = Api
+
 const formRef = ref<InstanceType<typeof MyForm>>()
 const visible = ref(false)
 const type = ref('create')
@@ -51,26 +54,17 @@ const pageData = reactive({
   createData: {}
 })
 //获取数据
-const getData = () => {
+const getData = (params?: {}) => {
   const page = { offset: pageData.pageInfo.offset, size: pageData.pageInfo.size }
-  let obj = { ...page, ...pageData.searchParams }
+  let obj = { ...page, ...params }
   getRoleList(obj).then((res) => {
     pageData.data = res.data.list
     pageData.pageInfo.total = res.data.totalCount
   })
 }
 getData()
-
-//我点击了查询
-const handleSearch = (row: any) => {
-  pageData.searchParams = { ...pageData.searchParams, ...row }
-  getData()
-}
-//重置
-const handleReset = (row: any) => {
-  pageData.searchParams = { ...pageData.searchParams, ...row }
-  getData()
-}
+//重置和查询
+const { handleSearch, handleReset } = useSearch(getData)
 //查看
 const handleView = (row: any) => {
   pageData.editData = row
@@ -79,7 +73,6 @@ const handleView = (row: any) => {
 }
 //添加
 const handleAdd = () => {
-  console.log(pageData)
   type.value = 'create'
   pageData.editData = {}
   visible.value = true

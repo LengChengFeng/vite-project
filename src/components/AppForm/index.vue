@@ -39,7 +39,9 @@
                 </template>
                 <template v-if="item.type === 'date'">
                   <el-date-picker
-                    type="date"
+                    type="datetimerange"
+                    start-placeholder="开始时间"
+                    end-placeholder="结束时间"
                     :placeholder="item.placeholder"
                     style="width: 100%"
                     v-model="obj[item.field]"

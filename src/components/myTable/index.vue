@@ -76,7 +76,6 @@ const props = withDefaults(
   defineProps<{
     tableData: any[]
     page?: any
-    searchParams?: any
     getData?: any
     isBorder?: boolean
     isStripe?: boolean
