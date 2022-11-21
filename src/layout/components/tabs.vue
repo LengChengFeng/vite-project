@@ -73,11 +73,9 @@ const handleAll = () => {
 const handleCloseOther = () => {
   const result = TabsList.value.find((item: ITabsType) => item.path === route.path)
   systemStore.TabsList = [
-    { name: '核心技术', path: '/main/analysis/overview' },
+    // { name: '核心技术', path: '/main/analysis/overview' },
     { name: result?.name!, path: result?.path! }
   ]
-  console.log(route.path)
-  console.log(result)
 }
 </script>
 

@@ -49,6 +49,15 @@ export const dialogFormItemConfig: FormConfigType = {
     formItem: [
         {
             type: 'input',
+            field: 'id',
+            placeholder: '请输入角色id',
+            label: '角色id',
+            col: 24,
+            width: "85%",
+            height: "45px"
+        },
+        {
+            type: 'input',
             field: 'name',
             placeholder: '请输入角色名称',
             label: '角色名称',
@@ -61,15 +70,6 @@ export const dialogFormItemConfig: FormConfigType = {
             field: 'intro',
             placeholder: '介绍',
             label: '介绍',
-            col: 24,
-            width: "85%",
-            height: "45px"
-        },
-        {
-            type: 'date',
-            field: 'createAt',
-            placeholder: '创建时间',
-            label: '创建日期',
             col: 24,
             width: "85%",
             height: "45px"

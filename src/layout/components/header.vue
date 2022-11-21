@@ -58,7 +58,6 @@ const breadcrumbItem: any = computed(() => {
   const currentPath = route.path
   return pathMapBreadcrumbs(menuList, currentPath)
 })
-console.log(breadcrumbItem.value)
 //折叠
 const isExpand = ref(false)
 const isFold = (type: boolean) => {

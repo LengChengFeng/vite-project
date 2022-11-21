@@ -9,39 +9,30 @@
       @handle-add="handleAdd"
       v-model:page="pageData.pageInfo"
       :getData="getData"
-      :search-params="pageData.searchParams"
     >
       <template #createDate="scoped"> {{ utcFormat(scoped.row.createAt) }}</template>
       <template #updateDate="scoped"> {{ utcFormat(scoped.row.createAt) }}</template>
     </MyTable>
-    <el-dialog v-model="visible" title="编辑" width="40%" draggable destroy-on-close :close-on-click-modal="false">
-      <div class="content">
-        <MyForm v-bind="dialogFormItemConfig" :value="pageData.editData" :type="type" ref="formRef" />
-      </div>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button type="primary" @click="handleEnsure">确认</el-button>
-          <el-button type="info" @click="visible = false">取消</el-button>
-        </span>
-      </template>
-    </el-dialog>
+    <MyDialog v-bind="dialogFormItemConfig" ref="dialogRef"> </MyDialog>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 
 import MyForm from '@/components/AppForm/index.vue'
 import MyTable from '@/components/myTable/index.vue'
+import MyDialog from '@/components/AppDialog/index.vue'
+
 import { useSearch } from '@/hooks/useSearch'
+import { useDialogHooks } from '@/hooks/useDialog'
+
 import { formItemConfig, tableConfig, dialogFormItemConfig } from './config'
+
 import { utcFormat } from '@/utils/format'
 import Api from '@/services/main/index'
 const { getRoleList } = Api
 
-const formRef = ref<InstanceType<typeof MyForm>>()
-const visible = ref(false)
-const type = ref('create')
 const pageData = reactive({
   data: [],
   searchParams: {},
@@ -49,9 +40,7 @@ const pageData = reactive({
     offset: 0,
     size: 10,
     total: 0
-  },
-  editData: {},
-  createData: {}
+  }
 })
 //获取数据
 const getData = (params?: {}) => {
@@ -65,33 +54,8 @@ const getData = (params?: {}) => {
 getData()
 //重置和查询
 const { handleSearch, handleReset } = useSearch(getData)
-//查看
-const handleView = (row: any) => {
-  pageData.editData = row
-  visible.value = true
-  type.value = 'view'
-}
-//添加
-const handleAdd = () => {
-  type.value = 'create'
-  pageData.editData = {}
-  visible.value = true
-}
-//编辑
-const handleEdit = (row: any) => {
-  type.value = 'edit'
-  pageData.editData = row
-  visible.value = true
-}
-//确认
-const handleEnsure = () => {
-  const isPass = formRef.value?.verifyField()
-  isPass?.then((res) => {
-    if (!!res) {
-      pageData.createData = formRef.value?.obj
-    }
-  })
-}
+//查看 编辑  添加
+const { dialogRef, handleAdd, handleEdit, handleView } = useDialogHooks()
 </script>
 
 <style lang="scss" scoped></style>

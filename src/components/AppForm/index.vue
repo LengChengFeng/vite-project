@@ -6,96 +6,100 @@
       </slot>
     </div>
     <div class="search">
-      <el-form :model="obj" :rules="rules" ref="formRef" :label-position="labelPosition" status-icon :disabled="type === 'view'">
-        <el-row :gutter="30">
-          <template v-for="item in formItem">
-            <el-col :span="item.col ? item.col : 6">
-              <el-form-item
-                :label="item.label"
-                :prop="item.field"
-                v-if="item.type !== 'custom'"
-                :size="item.size"
-                :label-width="labelWidth"
-              >
-                <template v-if="item.type === 'input'">
-                  <el-input
-                    :placeholder="item.placeholder"
-                    v-model="obj[item.field]"
-                    :style="{ width: item.width, height: item.height }"
-                    :clearable="item.clearable || true"
-                  />
-                </template>
-                <template v-if="item.type === 'select'">
-                  <el-select
-                    :placeholder="item.placeholder"
-                    v-model="obj[item.field]"
-                    :style="{ width: item.width, height: item.height }"
-                    :clearable="item.clearable || true"
+      <el-collapse v-model="activeName">
+        <el-collapse-item name="active">
+          <el-form :model="obj" :rules="rules" ref="formRef" :label-position="labelPosition" status-icon :disabled="type === 'view'">
+            <el-row :gutter="30">
+              <template v-for="item in formItem">
+                <el-col :span="item.col ? item.col : 6">
+                  <el-form-item
+                    :label="item.label"
+                    :prop="item.field"
+                    v-if="item.type !== 'custom'"
+                    :size="item.size"
+                    :label-width="labelWidth"
                   >
-                    <template v-for="option in item.data">
-                      <el-option :label="option.label" :value="option.label" />
+                    <template v-if="item.type === 'input'">
+                      <el-input
+                        :placeholder="item.placeholder"
+                        v-model="obj[item.field]"
+                        :style="{ width: item.width, height: item.height }"
+                        :clearable="item.clearable || true"
+                      />
                     </template>
-                  </el-select>
-                </template>
-                <template v-if="item.type === 'date'">
-                  <el-date-picker
-                    type="datetimerange"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
-                    :placeholder="item.placeholder"
-                    style="width: 100%"
-                    v-model="obj[item.field]"
-                    :style="{ width: item.width, height: item.height }"
-                    :clearable="item.clearable || true"
-                  />
-                </template>
-                <template v-if="item.type === 'textarea'">
-                  <el-input
-                    type="textarea"
-                    :placeholder="item.placeholder"
-                    v-model="obj[item.field]"
-                    :style="{ width: item.width, height: item.height }"
-                    :clearable="item.clearable || true"
-                  />
-                </template>
-                <template v-if="item.type === 'checkbox'">
-                  <el-checkbox-group
-                    v-model="obj[item.field]"
-                    :style="{ width: item.width, height: item.height }"
-                    :clearable="item.clearable || true"
-                  >
-                    <template v-for="all in item.data">
-                      <el-checkbox :label="all.label" name="type" />
+                    <template v-if="item.type === 'select'">
+                      <el-select
+                        :placeholder="item.placeholder"
+                        v-model="obj[item.field]"
+                        :style="{ width: item.width, height: item.height }"
+                        :clearable="item.clearable || true"
+                      >
+                        <template v-for="option in item.data">
+                          <el-option :label="option.label" :value="option.label" />
+                        </template>
+                      </el-select>
                     </template>
-                  </el-checkbox-group>
-                </template>
-                <template
-                  v-if="item.type === 'radio'"
-                  :style="{ width: item.width, height: item.height }"
-                  :clearable="item.clearable || true"
-                >
-                  <el-radio-group v-model="obj[item.field]">
-                    <template v-for="i in item.data">
-                      <el-radio :label="i.label" />
+                    <template v-if="item.type === 'date'">
+                      <el-date-picker
+                        type="datetimerange"
+                        start-placeholder="开始时间"
+                        end-placeholder="结束时间"
+                        :placeholder="item.placeholder"
+                        style="width: 100%"
+                        v-model="obj[item.field]"
+                        :style="{ width: item.width, height: item.height }"
+                        :clearable="item.clearable || true"
+                      />
                     </template>
-                  </el-radio-group>
-                </template>
-              </el-form-item>
-              <el-form-item>
-                <template v-if="item.type === 'custom'">
-                  <slot :name="item.slotName" :row="item"></slot>
-                </template>
-              </el-form-item>
-            </el-col>
-          </template>
-          <slot name="funcs"></slot>
-        </el-row>
-      </el-form>
-    </div>
-    <div class="footer" v-if="showBtn">
-      <el-button @click="handleSearch" icon="Search" type="primary" plain>搜索</el-button>
-      <el-button @click="handleReset" icon="Refresh" type="info" plain>重置</el-button>
-      <slot name="btn"></slot>
+                    <template v-if="item.type === 'textarea'">
+                      <el-input
+                        type="textarea"
+                        :placeholder="item.placeholder"
+                        v-model="obj[item.field]"
+                        :style="{ width: item.width, height: item.height }"
+                        :clearable="item.clearable || true"
+                      />
+                    </template>
+                    <template v-if="item.type === 'checkbox'">
+                      <el-checkbox-group
+                        v-model="obj[item.field]"
+                        :style="{ width: item.width, height: item.height }"
+                        :clearable="item.clearable || true"
+                      >
+                        <template v-for="all in item.data">
+                          <el-checkbox :label="all.label" name="type" />
+                        </template>
+                      </el-checkbox-group>
+                    </template>
+                    <template
+                      v-if="item.type === 'radio'"
+                      :style="{ width: item.width, height: item.height }"
+                      :clearable="item.clearable || true"
+                    >
+                      <el-radio-group v-model="obj[item.field]">
+                        <template v-for="i in item.data">
+                          <el-radio :label="i.label" />
+                        </template>
+                      </el-radio-group>
+                    </template>
+                  </el-form-item>
+                  <el-form-item>
+                    <template v-if="item.type === 'custom'">
+                      <slot :name="item.slotName" :row="item"></slot>
+                    </template>
+                  </el-form-item>
+                </el-col>
+              </template>
+              <slot name="funcs"></slot>
+            </el-row>
+          </el-form>
+          <div class="footer" v-if="showBtn">
+            <el-button @click="handleSearch" icon="Search" type="primary" plain>搜索</el-button>
+            <el-button @click="handleReset" icon="Refresh" type="info" plain>重置</el-button>
+            <slot name="btn"></slot>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
     </div>
   </div>
 </template>
@@ -103,6 +107,7 @@
 import { ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 const formRef = ref<FormInstance>()
+const activeName = ref('active')
 
 const props = withDefaults(
   defineProps<{
@@ -163,6 +168,26 @@ defineExpose({
 <style scoped lang="scss">
 .my-form {
   padding: 20px;
+  padding-top: 40px;
+  & :deep() .el-form-item__content > div {
+    width: 100%;
+  }
+
+  & :deep() {
+    .el-collapse,
+    .el-collapse-item__wrap {
+      border: 0px;
+    }
+    .el-collapse-item__header {
+      border: none;
+    }
+    .el-collapse-item__header {
+      height: 0px;
+    }
+    // .el-collapse-item > div:first-child {
+    //   display: none;
+    // }
+  }
 }
 
 .header {

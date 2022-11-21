@@ -149,7 +149,6 @@ const handleCurrentChange = (currentPage: number) => {
 <style>
 .my-table {
   padding: 20px;
-  border-top: 20px solid #f5f7f8;
 }
 
 .opts {
