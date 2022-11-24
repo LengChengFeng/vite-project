@@ -7,8 +7,8 @@
       @handleView="handleView"
       @handle-edit="handleEdit"
       @handle-add="handleAdd"
+      :loading="pageData.loading"
       v-model:page="pageData.pageInfo"
-      :getData="getData"
     >
       <template #createDate="scoped"> {{ utcFormat(scoped.row.createAt) }}</template>
       <template #updateDate="scoped"> {{ utcFormat(scoped.row.createAt) }}</template>
@@ -28,14 +28,18 @@ import { useSearch } from '@/hooks/useSearch'
 import { useDialogHooks } from '@/hooks/useDialog'
 
 import { formItemConfig, tableConfig, dialogFormItemConfig } from './config'
-
+import { getDataList } from '@/services/test'
 import { utcFormat } from '@/utils/format'
 import Api from '@/services/main/index'
 const { getRoleList } = Api
 
+getDataList({ offset: 0, size: 10 }).then((res) => {
+  console.log(res)
+})
 const pageData = reactive({
   data: [],
   searchParams: {},
+  loading: true,
   pageInfo: {
     offset: 0,
     size: 10,
@@ -46,10 +50,15 @@ const pageData = reactive({
 const getData = (params?: {}) => {
   const page = { offset: pageData.pageInfo.offset, size: pageData.pageInfo.size }
   let obj = { ...page, ...params }
-  getRoleList(obj).then((res) => {
-    pageData.data = res.data.list
-    pageData.pageInfo.total = res.data.totalCount
-  })
+  getRoleList(obj)
+    .then((res) => {
+      pageData.data = res.data.list
+      pageData.pageInfo.total = res.data.totalCount
+      pageData.loading = false
+    })
+    .catch((err) => {
+      pageData.loading = false
+    })
 }
 getData()
 //重置和查询

@@ -3,7 +3,7 @@
     <bm-marker :position="{ lng: 116.297611, lat: 40.047363 }" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
       <bm-label content="我是路线起点" :labelStyle="{ color: 'red', fontSize: '24px' }" :offset="{ width: -35, height: 30 }" />
     </bm-marker>
-    <bm-polyline :path="path" :key="path" strokeColor="red" strokeWeight="5"></bm-polyline>
+    <bm-polyline :path="path" :key="path" strokeColor="red" :strokeWeight="5"></bm-polyline>
     <bm-marker :position="{ lng: 116.307223, lat: 40.056379 }" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
       <bm-label content="我是路线终点" :labelStyle="{ color: 'red', fontSize: '24px' }" :offset="{ width: -35, height: 30 }" />
     </bm-marker>

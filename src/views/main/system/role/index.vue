@@ -85,7 +85,7 @@ useEchart(myEcahrt, options)
 
 <style scoped>
 .box-card {
-  width: 500px;
+  width: 50%;
 }
 .echart {
   width: 100%;

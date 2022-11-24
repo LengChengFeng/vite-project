@@ -10,7 +10,15 @@
       </div>
     </div>
     <div class="table">
-      <el-table :data="tableData" :border="isBorder" :stripe="isStripe" @selection-change="handleSelect" :style="{ width: tableWidth }">
+      <el-table
+        :data="tableData"
+        :border="isBorder"
+        :stripe="isStripe"
+        @selection-change="handleSelect"
+        :style="{ width: tableWidth }"
+        v-loading="loading"
+        element-loading-text="Loading..."
+      >
         <el-table-column type="selection" width="55" align="center" v-if="showSection" />
         <el-table-column type="index" width="80" label="序号" align="center" v-if="showIndex" />
         <template v-for="item in tableItem">
@@ -61,7 +69,6 @@ const permissions = ['edit', 'view', 'del', 'add']
 function getPermission(key: string) {
   return permissions.some((item) => item === key)
 }
-
 interface tableItemConfig {
   label: string
   prop: string
@@ -75,6 +82,7 @@ interface tableItemConfig {
 const props = withDefaults(
   defineProps<{
     tableData: any[]
+    loading: boolean
     page?: any
     getData?: any
     isBorder?: boolean

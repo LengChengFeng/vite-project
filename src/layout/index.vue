@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import HeaderComponent from './components/header.vue'
-import MenuComponent from './components/menu.vue'
+import HeaderComponent from './components/header/header.vue'
+import MenuComponent from './components/menu/menu.vue'
 import { useRouterStore } from '@/store/modules/system-store'
 import { computed } from '@vue/reactivity'
 

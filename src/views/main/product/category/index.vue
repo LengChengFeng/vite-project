@@ -5,11 +5,16 @@
     <el-button @click="handleClick('right')">右边滚动</el-button>
     <el-button @click="handleClick('down')">下边滚动</el-button>
     <vue3-seamless-scroll :list="list" class="scroll" :step="0.8" :hover="true" :direction="direction">
-      <div class="item" v-for="(item, index) in list" :key="index">
+      <div class="item" v-for="(item, index) in list" :key="index" :data-index="index">
         <span>{{ item.title }}</span>
         <span>{{ item.date }}</span>
       </div>
     </vue3-seamless-scroll>
+  </div>
+  <div @click="click">
+    <template v-for="item in arr" :key="item.name">
+      <div class="test">我是name:{{ item.name }}</div>
+    </template>
   </div>
 </template>
 <script setup lang="ts">
@@ -62,8 +67,36 @@ const list = [
 const handleClick = (direct: IDirectionType) => {
   direction.value = direct
 }
+
+const arr = [
+  {
+    name: 1,
+    id: 2
+  },
+  {
+    name: 2,
+    id: 2
+  },
+  {
+    name: 3,
+    id: 2
+  },
+  {
+    name: 4,
+    id: 2
+  }
+]
+
+const click = (e: Event) => {
+  console.log(e)
+}
 </script>
 <style lang="scss" scoped>
+.test {
+  height: 50px;
+  margin: 10px;
+  background-color: red;
+}
 .scroll {
   height: 200px;
   width: 500px;

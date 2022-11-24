@@ -63,7 +63,7 @@ const goLogin = () => {
     ElMessage.error('两次密码输入不一致')
     return
   }
-  formRef.value?.validate(async (valid) => {
+  formRef.value?.validate(async (valid: boolean) => {
     if (!!userInfo.isChecked) {
       saveLocalData('info', { ...userInfo })
     } else {
