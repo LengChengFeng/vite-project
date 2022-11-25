@@ -57,6 +57,7 @@ const handleFoldChange = (value: boolean) => {
     width: 100%;
     height: 120px;
     padding-top: 0 20px;
+    min-width: 800px;
   }
   .el-main {
     background-color: #f0f2f5;

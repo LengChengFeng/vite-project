@@ -47,13 +47,11 @@ class LcfRequest {
             return config
         })
         this.axiosInstance.interceptors.response.use(res => {
-            console.log('拦截器23');
             //关闭loading
             if (!!this.showLoading) {
                 this.loading.close()
             }
             if (res.data.code === 0) {
-                ElMessage.success("数据获取成功")
                 return res.data
             }
             // 没有鉴权，需要重新登录

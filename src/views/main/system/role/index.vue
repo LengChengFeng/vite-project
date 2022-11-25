@@ -1,12 +1,20 @@
 <template>
-  <el-card class="box-card">
-    <div class="echart" ref="myEcahrt"></div>
-  </el-card>
+  <div class="echarts">
+    <div class="top">
+      <el-card class="box-card">
+        <PieComponent />
+      </el-card>
+      <el-card class="box-card">
+        <div class="echart" ref="myEcahrt"></div>
+      </el-card>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import useEchart from '@/hooks/useEchart'
+import PieComponent from './components/pieComponent.vue'
 import type { EChartsOption } from 'echarts'
 
 const myEcahrt = ref<HTMLElement>()
@@ -83,10 +91,18 @@ const options: EChartsOption = {
 useEchart(myEcahrt, options)
 </script>
 
-<style scoped>
-.box-card {
-  width: 50%;
+<style scoped lang="scss">
+.echarts {
+  .top {
+    display: flex;
+    justify-content: space-between;
+    .box-card {
+      height: 50%;
+      width: 49%;
+    }
+  }
 }
+
 .echart {
   width: 100%;
   height: 400px;
