@@ -6,7 +6,6 @@ import { useUserInfoStore } from "@/store/modules/userInfo-store";
 
 let flag = true
 router.beforeEach(async (to) => {
-
     const token = getLocalData("token")
     const userStore = useUserInfoStore()
     if (to.path !== '/login') {
@@ -21,6 +20,7 @@ router.beforeEach(async (to) => {
             return '/login'
         }
     }
+
 
 })
 

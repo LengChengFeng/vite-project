@@ -1,114 +1,44 @@
 <template>
   <div class="echarts">
-    <div class="top">
-      <el-card class="box-card">
-        <PieComponent />
-      </el-card>
-      <el-card class="box-card">
-        <div class="echart" ref="myEcahrt"></div>
-      </el-card>
-    </div>
+    <el-row :gutter="24">
+      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" style="margin-bottom: 20px">
+        <AppCard title="我是饼图" class="pie">
+          <template #default>
+            <PieComponent />
+          </template>
+        </AppCard>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" style="margin-bottom: 20px">
+        <AppCard title="屏幕滚动" class="pie">
+          <template #default>
+            <ScrollVue />
+          </template>
+        </AppCard>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" style="margin-bottom: 20px">
+        <AppCard title="我是饼图" class="pie">
+          <template #default>
+            <PieComponent />
+          </template>
+        </AppCard>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" style="margin-bottom: 20px">
+        <AppCard title="我是饼图" class="pie">
+          <template #default>
+            <BarEchart />
+          </template>
+        </AppCard>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import useEchart from '@/hooks/useEchart'
+import AppCard from '@/components/AppCard/index.vue'
+import ScrollVue from './components/scrollVue.vue'
 import PieComponent from './components/pieComponent.vue'
-import type { EChartsOption } from 'echarts'
-
-const myEcahrt = ref<HTMLElement>()
-const options: EChartsOption = {
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      lineStyle: {
-        width: 1,
-        color: '#019680'
-      }
-    }
-  },
-  xAxis: {
-    type: 'category',
-    boundaryGap: false,
-    data: [...new Array(18)].map((_item, index) => `${index + 6}:00`),
-    splitLine: {
-      show: true,
-      lineStyle: {
-        width: 1,
-        type: 'solid',
-        color: 'rgba(226,226,226,0.5)'
-      }
-    },
-    axisTick: {
-      show: false
-    }
-  },
-  yAxis: [
-    {
-      type: 'value',
-      max: 80000,
-      splitNumber: 4,
-      axisTick: {
-        show: false
-      },
-      splitArea: {
-        show: true,
-        areaStyle: {
-          color: ['rgba(255,255,255,0.2)', 'rgba(226,226,226,0.2)']
-        }
-      }
-    }
-  ],
-  grid: { left: '1%', right: '1%', top: '2%', bottom: 0, containLabel: true },
-  series: [
-    {
-      smooth: true,
-      data: [111, 222, 4000, 18000, 33333, 55555, 66666, 33333, 14000, 36000, 66666, 44444, 22222, 11111, 4000, 2000, 500, 333, 222, 111],
-      type: 'line',
-      areaStyle: {},
-      itemStyle: {
-        color: '#5ab1ef'
-      },
-      emphasis: {
-        focus: 'series'
-      }
-    },
-    {
-      smooth: true,
-      data: [33, 66, 88, 333, 3333, 5000, 18000, 3000, 1200, 13000, 22000, 11000, 2221, 1201, 390, 198, 60, 30, 22, 11],
-      type: 'line',
-      areaStyle: {},
-      itemStyle: {
-        color: '#019680'
-      },
-      emphasis: {
-        focus: 'series'
-      }
-    }
-  ]
-}
-useEchart(myEcahrt, options)
+import BarEchart from './components/barEchart.vue'
+// import type { EChartsOption } from 'echarts'
 </script>
 
-<style scoped lang="scss">
-.echarts {
-  .top {
-    display: flex;
-    justify-content: space-between;
-    .box-card {
-      height: 50%;
-      width: 49%;
-    }
-  }
-}
-
-.echart {
-  width: 100%;
-  height: 400px;
-}
-.app {
-  width: 100%;
-  height: 500px;
-}
-</style>
+<style scoped lang="scss"></style>

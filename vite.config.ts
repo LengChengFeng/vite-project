@@ -19,18 +19,6 @@ export default defineConfig({
     port: 5176,
     // secure:false,
     proxy: {
-      // '/api': {
-      //   // target: 'https://47.110.79.244:81', // 开发
-      //   target: 'http://127.0.0.1/api', // 测试
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/api/, '')
-      // },
-      '/admin-api': {
-        target: 'http://192.168.1.22:48080/admin-api',
-        ws: false,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/admin-api/, ''),
-      },
     },
   },
   //设置全局变量 

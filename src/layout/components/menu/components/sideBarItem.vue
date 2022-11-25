@@ -1,17 +1,14 @@
 <template>
   <el-sub-menu :index="items.url">
     <template #title>
-      <component :is="items.icon" class="menu" />
-      {{ items.name }}
+      <el-icon><location /></el-icon>
+      <span>{{ items.name }}</span>
     </template>
     <template v-for="item in items.children">
-      <template v-if="isDeep(item)">
-        <el-menu-item :index="item.url" v-show="!item?.hideMenu">
-          <span class="dotted"></span>
-          <component :is="item.icon" class="menu" />
-          {{ item.name }}
-        </el-menu-item>
-      </template>
+      <el-menu-item :index="item.url" v-show="!item?.hideMenu" v-if="isDeep(item)">
+        <el-icon><location /></el-icon>
+        <span> {{ item.name }}</span>
+      </el-menu-item>
       <template v-else>
         <SideBarItem :items="item" />
       </template>
@@ -35,7 +32,6 @@ const isDeep = computed(() => {
     return !item?.children?.length || item.type === 2
   }
 })
-console.log(props.items)
 </script>
 
 <style scoped lang="scss">

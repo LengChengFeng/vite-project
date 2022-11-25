@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside :width="isFold ? '70px' : '210px'">
+      <el-aside :width="isFold ? '60px' : '210px'">
         <MenuComponent :isCollapse="isFold" />
       </el-aside>
       <el-container>
@@ -10,11 +10,11 @@
         </el-header>
         <el-main class="content">
           <router-view v-slot="{ Component, route }">
-            <transition name="el-fade-in-linear" mode="out-in">
-              <!-- <keep-alive> -->
-              <component v-if="isRefresh" :is="Component" :key="route.path" />
-              <!-- </keep-alive> -->
-            </transition>
+            <!-- <transition name="el-fade-in-linear" mode="out-in"> -->
+            <!-- <keep-alive> -->
+            <component v-if="isRefresh" :is="Component" :key="route.path" />
+            <!-- </keep-alive> -->
+            <!-- </transition> -->
           </router-view>
         </el-main>
       </el-container>
